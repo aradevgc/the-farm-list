@@ -1,0 +1,21 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Archivos de entorno / secretos
+.env
+
+# Logs
+*.log
+
+# Mac / Windows archivos basura
+.DS_Store
+Thumbs.db
+
+# Build o archivos temporales (si hicieras build)
+dist/
+build/
+
+# Opcional: PWA cache temporal
+sw-cache/
