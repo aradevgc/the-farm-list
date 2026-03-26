@@ -1,21 +1,15 @@
-const http = require("http");
-const { setupWebSocket } = require("./websocket");
+app.post("/add", (req, res) => {
+  const { item, user } = req.body;
 
+  const newItem = {
+    text: item,
+    user: user
+  };
 
-const server = http.createServer((req, res) => {
-  res.writeHead(200);
-  res.end("Servidor activo");
+  items.push(newItem);
+
+  // enviar a todos (websocket)
+  broadcast(newItem);
+
+  res.sendStatus(200);
 });
-
-setupWebSocket(server);
-
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`Servidor corriendo en puerto ${PORT}`);
-});
-
-const express = require('express'); // Si usas express
-const path = require('path');
-
-// Esto sirve los archivos estáticos del frontend
-server.use(express.static(path.join(__dirname, '../frontend')));
