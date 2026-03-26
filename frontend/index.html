@@ -1,11 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>Live List</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+  <h1>Live List</h1>
+  
+  <div id="login">
+    <input type="text" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+  </div>
+
+  <div id="app" style="display:none;">
+    <input id="item" placeholder="Añadir producto">
+    <button onclick="addItem()">Añadir</button>
+    <ul id="list"></ul>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
