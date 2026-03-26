@@ -1,17 +1,24 @@
 let username = "";
-const API_URL = "https://the-farm-list.onrender.com"; // CAMBIA ESTO POR TU URL DE RENDER
-const WS_URL = API_URL.replace("https://", "wss://");
-
-let socket = new WebSocket(WS_URL);
+const API_URL = "https://the-farm-list.onrender.com"; // Asegúrate que esta es tu URL
+const socket = new WebSocket(API_URL.replace("https", "wss"));
 
 window.onload = () => {
   const savedUser = localStorage.getItem("username");
   if (savedUser) {
     username = savedUser;
     showApp();
-    loadItems();
+    loadItems(); // Carga lo que hay en la base de datos
   }
 };
+
+function start() {
+  const input = document.getElementById("username").value;
+  if (!input) return alert("Pon un nombre");
+  username = input;
+  localStorage.setItem("username", username);
+  showApp();
+  loadItems();
+}
 
 function showApp() {
   document.getElementById("userSetup").style.display = "none";
@@ -28,11 +35,10 @@ async function loadItems() {
 async function addItem() {
   const input = document.getElementById("item");
   if (!input.value) return;
-
   await fetch(`${API_URL}/add`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ item: input.value, user: username, isTemplate: false })
+    body: JSON.stringify({ item: input.value, user: username })
   });
   input.value = "";
 }
@@ -41,27 +47,22 @@ async function deleteItem(id) {
   await fetch(`${API_URL}/items/${id}`, { method: "DELETE" });
 }
 
-// Escuchar cambios en tiempo real
 socket.onmessage = (event) => {
   const data = JSON.parse(event.data);
-  
   if (data.type === "DELETE") {
-    const el = document.getElementById(`item-${data.id}`);
-    if (el) el.remove();
-  } else {
-    renderItem(data);
+    document.getElementById(`item-${data.id}`)?.remove();
+  } else if (data.type === "ADD") {
+    renderItem(data.item);
   }
 };
 
-function renderItem(data) {
-  const id = data._id || data.id;
-  if (document.getElementById(`item-${id}`)) return;
-
+function renderItem(item) {
+  const list = document.getElementById("list");
   const li = document.createElement("li");
-  li.id = `item-${id}`;
+  li.id = `item-${item._id}`;
   li.innerHTML = `
-    <span><strong>${data.text}</strong> <br> <small>por ${data.user}</small></span>
-    <button onclick="deleteItem('${id}')" class="btn-delete">🗑️</button>
+    <span>${item.text} <small>(por ${item.user})</small></span>
+    <button onclick="deleteItem('${item._id}')" class="btn-del">❌</button>
   `;
-  document.getElementById("list").appendChild(li);
+  list.appendChild(li);
 }
