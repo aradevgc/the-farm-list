@@ -1,3 +1,28 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    /* Gradiente corregido */
+    background: linear-gradient(180deg, #A6FF00 0%, #4B6718 58%, #000000 100%);
+    background-attachment: fixed; /* Para que el fondo no se mueva al hacer scroll */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+}
 
-    body {
-        background-color: linear-gradient(0% #A6FF00, 58% #4B6718, 100% #000000);}
+input, button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin: 5px;
+}
+
+li {
+    list-style: none;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
