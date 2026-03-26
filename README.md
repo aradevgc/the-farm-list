@@ -1,1 +1,3 @@
 <h2>THE FARM LIST<h2>
+<p>An colaborative application for create, edit, visualize and check your routine tasks, like shopping, study, or working
+<img scr="assets/README IMAGE.png" style="witdh: 20px; heigth: 20px;>
